@@ -34,14 +34,15 @@
            </div>
            
            <div class="well">
-               <div class="text-left">
-                   <strong>Comments</strong>
-               </div>
+               
+                   <h3>Comments</h3>
+
+                <hr>
+
                 <div class="text-right">
                     <a href="/campgrounds/<%=camp._id %>/comments/new" > <button class="btn btn-success">Add a comment</button></a>
                 </div>
-                
-                <hr>
+
                 <% for(var i=0;i<camp.comments.length;i++){ %>
                 <div class="row">
                     <div class="col-md-12">
@@ -69,16 +70,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
 
 
 
