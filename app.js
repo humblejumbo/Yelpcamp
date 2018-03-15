@@ -35,7 +35,7 @@ app.use(require('express-session')
 app.use(passport.initialize());
 app.use(passport.session());
 //mongoose.connect("mongodb://localhost/Yelpcamp");
-mongoose.connect("mongodb://tyson:nigga@ds115219.mlab.com:15219/campy");
+mongoose.connect(process.env.DATABASEURL);
 
 //PASSPORT CONFIG
 
