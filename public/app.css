@@ -1,0 +1,24 @@
+.thumbnail img
+{
+    width:100%;
+}
+
+.thumbnail{
+    padding: 0;
+}
+
+.caption-full
+{
+    padding:9px;
+}
+
+.delete
+{
+    display:inline;
+}
+
+/*.ts
+{
+    transition: background 3.0s;
+}*/
+
