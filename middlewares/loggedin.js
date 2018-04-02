@@ -1,3 +1,4 @@
+//CHECK IF USER IS LOGGED IN
 function isLoggedIn(req,res,next)
 {
     if(req.isAuthenticated())

@@ -1,3 +1,4 @@
+//COMMENT AUTHORISATION
 var Comments=require('../models/comments');
 
 function commentOwnership(req,res,next)

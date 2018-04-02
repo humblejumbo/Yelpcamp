@@ -1,8 +1,86 @@
-<% include partials/header %>
+<!DOCTYPE html>
 
-<h1>WELCOME TO THE YELPCAMP WEBAPP</h1>
-<h3>HERE YOU CAN FIND BUNCH OF EXOTIC PLACES FOR CAMPING..</h3>
+<html>
+    <head>
+        <title>
+            Yelpcamp
+        </title>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="../../app.css">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,800" rel="stylesheet">
+        
+        
+        <style type='text/css'>
+        
+            html{
+                height:100%;
+            }
+            body{
+                /* background-image:url("http://phuquoccampingtrip.com/wp-content/uploads/2017/09/Camping2.jpg");  */
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+            #cover
+            {
+                margin-top: 20%;
+                color:aliceblue;
+                text-align: center;
+                font-family: 'Raleway', sans-serif;
+                
+            }
+            h1{
+                font-size: 45px;
+            }
+            h1,h4,hr{
+                text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
+                font-weight:800; 
+                
+            }
+            hr{
+                width:30%;
+            }
+            img{
+                position:absolute;
+                top:0;
+                display:none;
+                width:100%;
+                height:100%;
+                z-index: -1;
+            }
+        </style>
 
-<a href=/campgrounds>VIEW ALL CAMPGROUNDS..</a>
+<!-- BACKGROUND IMAGES -->
+<div id="wrap">
+    <img src="http://phuquoccampingtrip.com/wp-content/uploads/2017/09/Camping2.jpg">
+    <img src= "https://media.npr.org/assets/img/2017/02/02/camping_wide-6f5e189edbd978d29ea44410ffe4c599bb92b06d.jpg?s=1400">
+    <img src="https://media4.s-nbcnews.com/i/newscms/2017_31/1269316/camping-on-the-plaza-today-tease-170801_ce17c3eb42528d2b790af9098aab52c1.jpg">
+    <img src="http://phuquoccampingtrip.com/wp-content/uploads/2017/09/Camping11.jpg">
+</div>
+    
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12" id="cover">
+            <h1>Yelpcamp</h1>
+            <h4>Ready To Explore..?</h4>
+            <hr>
+            <a href='/campgrounds' class="btn btn-lg btn-primary" role="button"><span class="glyphicon glyphicon-road" aria-hidden="true"></span> Get Started</a>
+        </div>
+    </div>
+</div>
 
-<% include partials/footer %>
+<script>
+
+//TO CHANGE THE BACKGROUND IMAGES OF LANDING PAGE       
+$('img').hide();
+ function anim() {
+    $("#wrap img").first().appendTo('#wrap');
+    $("#wrap img").first().fadeIn(3000);    
+    setTimeout(anim, 3000);
+}
+anim();
+    
+ </script>
+ 
+    </body>
+</html>    

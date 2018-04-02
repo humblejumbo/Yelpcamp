@@ -1,0 +1,18 @@
+<% include ./partials/header %>
+
+<div class="container" >
+    <h1>Forgot Password</h1>
+
+    <form action="/forget" method='post'>
+        <div class="form-group">
+            <input type="email" name="email" placeholder="enter email" style="width:60%">
+        </div>
+        <div class='form-group'>
+            <button class='btn btn-lg  btn-info'>Send</button>
+        </div>
+    </form>    
+
+    <a href='/login'>Back</a>
+</div>
+
+<%include ./partials/footer %>

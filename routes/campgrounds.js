@@ -1,9 +1,12 @@
 var express=require('express');
 var router= express.Router();
+var dotenv=require('dotenv');
+dotenv.config();
 var Campgrounds=require('../models/campgrounds');
 var isLoggedIn=require('../middlewares/loggedin');
 var campOwnership=require('../middlewares/campownership');
 
+//INDEX ROUTE
 router.get('/',function(req,res)
 {
     Campgrounds.find({},function(err,findall)
@@ -16,16 +19,19 @@ router.get('/',function(req,res)
     
 });
 
+//NEW CAMPGROUND ROUTE
 router.get('/new',isLoggedIn,function(req,res)
 {
 
     res.render("./campgrounds/new.ejs");
 });
 
+//CREATE CAMPGROUND ROUTE
 router.post('/',isLoggedIn,function(req,res){
     var obj={
         name:req.body.name,
         img:req.body.img,
+        location:req.body.location,
         description:req.body.description,
         author:{
             id:req.user._id,
@@ -39,7 +45,7 @@ router.post('/',isLoggedIn,function(req,res){
         console.log(err);
         else
         {
-            console.log(newone);
+           // console.log(newone);
             req.flash("success","Created a new Campground");
             res.redirect('/campgrounds');
         }
@@ -47,6 +53,7 @@ router.post('/',isLoggedIn,function(req,res){
     
 });
 
+//SHOW CAMPGROUND ROUTE
 router.get('/:id',function(req,res){
     
     Campgrounds.findById(req.params.id).populate("comments").exec(function(err,item){
@@ -60,6 +67,7 @@ router.get('/:id',function(req,res){
     
 });
 
+//EDIT CAMPGROUND ROUTE
 router.get('/:id/edit',campOwnership,function(req,res)
 {
     Campgrounds.findById(req.params.id,function(err,found)
@@ -72,6 +80,7 @@ router.get('/:id/edit',campOwnership,function(req,res)
   
 });
 
+//UPDATE CAMPGROUND ROUTE
 router.put('/:id',campOwnership,function(req,res)
 {
   Campgrounds.findByIdAndUpdate(req.params.id,req.body.campground,function(err,updated)
@@ -80,13 +89,14 @@ router.put('/:id',campOwnership,function(req,res)
       console.log("error");
       else
       {
-          console.log("updated");
+         // console.log("updated");
           req.flash("success","Updated The Campground");
           res.redirect('/campgrounds/'+updated._id);
       }
   });
 });
 
+//DELETE CAMPGROUND ROUTE
 router.delete('/:id',campOwnership,function(req,res)
 {
     Campgrounds.findByIdAndRemove(req.params.id,function(err,found)
@@ -95,7 +105,7 @@ router.delete('/:id',campOwnership,function(req,res)
         console.log(err);
         else
         {
-         console.log("removed");
+        // console.log("removed");
           req.flash("success","Deleted The Campground");
          res.redirect('/campgrounds');
         }

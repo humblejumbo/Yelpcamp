@@ -6,7 +6,12 @@ var passport                =require('passport');
 var localstrategy           =require('passport-local');
 var passportlocalmongoose   =require('passport-local-mongoose');
 var methodoverride          =require('method-override');
+var nodemailer              =require('nodemailer');
 var flash                   =require('connect-flash');
+var bcrypt                  =require('bcrypt-nodejs');
+var async                   =require('async');
+var crypto                  =require('crypto');
+var dotenv                  =require('dotenv');
 
 var Campgrounds=require('./models/campgrounds');
 var Comments=require('./models/comments');
@@ -22,6 +27,7 @@ seedsDB();
 
 
 var app=express();
+dotenv.config();
 app.use(bodyparser.urlencoded({extended:true}));
 app.use(express.static(__dirname +'/public'));
 app.use(methodoverride("_method"));
@@ -36,12 +42,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 //mongoose.connect("mongodb://localhost/Yelpcamp");
 mongoose.connect(process.env.DATABASEURL);
+//mongoose.connect("mongodb://tyson:nigga@ds115219.mlab.com:15219/campy")
 
 //PASSPORT CONFIG
-
 passport.use(new localstrategy(Users.authenticate()));
 passport.serializeUser(Users.serializeUser());
 passport.deserializeUser(Users.deserializeUser());
+
 
 app.use(function(req,res,next)
 {
@@ -57,6 +64,6 @@ app.use('/campgrounds/:id/comments',commentroutes);
 app.use('/',indexroutes);
 
 
-app.listen(process.env.PORT,process.env.IP,function(){
+app.listen(3000,function(){
     console.log("THE YELPCAMP SERVER HAS STARTED");
 });

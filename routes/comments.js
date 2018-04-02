@@ -5,6 +5,7 @@ var Comments= require('../models/comments');
 var isLoggedIn=require('../middlewares/loggedin');
 var commentOwnership=require('../middlewares/commentownership');
 
+//NEW COMMENT ROUTE
 router.get('/new',isLoggedIn,function(req,res)
 {
      Campgrounds.findById(req.params.id,function(err,found)
@@ -21,6 +22,7 @@ router.get('/new',isLoggedIn,function(req,res)
     });
 });
 
+//CREATE COMMENT ROUTE
 router.post('/',isLoggedIn,function(req,res)
 {
    Campgrounds.findById(req.params.id,function(err,found)
@@ -52,6 +54,7 @@ router.post('/',isLoggedIn,function(req,res)
 
 });
 
+//EDIT COMMENT ROUTE
 router.get('/:comment_id/edit',commentOwnership,function(req,res)
 {
     
@@ -63,6 +66,7 @@ router.get('/:comment_id/edit',commentOwnership,function(req,res)
  
 });
 
+//UPDATE COMMENT ROUTE
 router.put('/:comment_id',commentOwnership,function(req,res)
 {
     
@@ -79,6 +83,7 @@ router.put('/:comment_id',commentOwnership,function(req,res)
     
 });
 
+//DELETE COMMENT ROUTE
 router.delete('/:comment_id',commentOwnership,function(req,res)
 {
     var camp_id=req.params.id;

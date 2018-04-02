@@ -1,3 +1,5 @@
+//CAMPGROUND AUTHORISATION
+
 var Campgrounds=require('../models/campgrounds');
 
 function campOwnership(req,res,next)

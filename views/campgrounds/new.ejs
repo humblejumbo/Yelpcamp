@@ -13,7 +13,10 @@
             <input type="text" class="form-control" name="img" placeholder="enter image url">
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="description" placeholder="description">
+            <input type="text" class="form-control" id='txtautocomplete' name="location" placeholder='enter location' >
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" name="description" placeholder="description" rows="4"></textarea>
         </div>
         <div class="form-group">
              <button class="btn btn-primary btn-lg btn-block text-center">Create</button>
@@ -28,7 +31,23 @@
 
 </div>
 
+<script>
+    //GOOGLE PLACES AUTOCOMPLETE
+    function initialize()
+    {
+        var input=document.getElementById("txtautocomplete");
+        var options={
+            types:['geocode'],
+            componentRestricitions:{country:'in'}
+        }
+        autocomplete=new google.maps.places.Autocomplete(input,options);
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+		place = autocomplete.getPlace();
+		lat=place.geometry.location.lat();
+        lng=place.geometry.location.lng();
+        });
+    } 
+</script>
 
-
-
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsHRIlyGXttltN9ul3Lytrhixq9Rj4p5s&libraries=places&callback=initialize" async defer></script>
 <% include ../partials/footer %>
