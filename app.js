@@ -32,49 +32,18 @@ app.use(bodyparser.urlencoded({extended:true}));
 app.use(express.static(__dirname +'/public'));
 app.use(methodoverride("_method"));
 app.use(flash());
-// app.use(require('cookie-session')({
-//     name: 'session',
-//     keys: ['key'],
-  
-//     // Cookie Options
-//     maxAge: 24 * 60 * 60 * 1000 ,// 24 hours
-//     secret:"don't tell anyone",
-//     resave:false,
-//     saveUninitialized:false
-//   }));
 
-// app.use(require('express-session')
-//     ({
-//         secret:"don't tell anyone",
-//         resave:false,
-//         saveUninitialized:false
-//     }));
-
-app.set('trust proxy', 1);
-
-app.use(session({
-cookie:{
-    secure: true,
-    maxAge:60000
-       },
-store: new RedisStore(),
-secret: 'secret',
-saveUninitialized: true,
-resave: false
-}));
-
-app.use(function(req,res,next){
-if(!req.session){
-    return next(new Error('Oh no')) //handle error
-}
-next() //otherwise continue
-});
+app.use(require('express-session')
+    ({
+        secret:"don't tell anyone",
+        resave:false,
+        saveUninitialized:false
+    }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 //mongoose.connect("mongodb://localhost/Yelpcamp");
 mongoose.connect(process.env.DATABASEURL);
-//mongoose.connect("mongodb://tyson:nigga@ds115219.mlab.com:15219/campy")
 
 //PASSPORT CONFIG
 passport.use(new localstrategy(Users.authenticate()));
