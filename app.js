@@ -12,7 +12,6 @@ var bcrypt                  =require('bcrypt-nodejs');
 var async                   =require('async');
 var crypto                  =require('crypto');
 var dotenv                  =require('dotenv');
-var cookieSession           =require('cookie-session');
 
 var Campgrounds=require('./models/campgrounds');
 var Comments=require('./models/comments');
@@ -33,19 +32,22 @@ app.use(bodyparser.urlencoded({extended:true}));
 app.use(express.static(__dirname +'/public'));
 app.use(methodoverride("_method"));
 app.use(flash());
-app.use(cookieSession({
+app.use(require('cookie-session')({
     name: 'session',
     keys: ['key'],
   
     // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    maxAge: 24 * 60 * 60 * 1000 ,// 24 hours
+    secret:"don't tell anyone",
+    resave:false,
+    saveUninitialized:false
   }));
-app.use(require('express-session')
-    ({
-        secret:"don't tell anyone",
-        resave:false,
-        saveUninitialized:false
-    }));
+// app.use(require('express-session')
+//     ({
+//         secret:"don't tell anyone",
+//         resave:false,
+//         saveUninitialized:false
+//     }));
 app.use(passport.initialize());
 app.use(passport.session());
 //mongoose.connect("mongodb://localhost/Yelpcamp");
