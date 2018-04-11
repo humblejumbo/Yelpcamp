@@ -1,10 +1,36 @@
 var express=require('express');
 var router= express.Router();
 var dotenv=require('dotenv');
+var multer = require('multer');
+var cloudinary = require('cloudinary');
+
 dotenv.config();
+
 var Campgrounds=require('../models/campgrounds');
 var isLoggedIn=require('../middlewares/loggedin');
 var campOwnership=require('../middlewares/campownership');
+
+var storage = multer.diskStorage({
+    filename: function (req, file, callback) {
+        callback(null, Date.now() + file.originalname);
+    }
+});
+
+var imageFilter = function (req, file, cb) {
+    // accept image files only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+
+var upload = multer({ storage: storage, fileFilter: imageFilter });
+
+cloudinary.config({
+    cloud_name: 'dcllce5it',
+    api_key: 121594475921245,
+    api_secret: '6rzpk9r0FN7HgiTja3VR5vdMGVk'
+});
 
 //INDEX ROUTE
 router.get('/',function(req,res)
@@ -22,34 +48,31 @@ router.get('/',function(req,res)
 //NEW CAMPGROUND ROUTE
 router.get('/new',isLoggedIn,function(req,res)
 {
-
     res.render("./campgrounds/new.ejs");
 });
 
 //CREATE CAMPGROUND ROUTE
-router.post('/',isLoggedIn,function(req,res){
-    var obj={
-        name:req.body.name,
-        img:req.body.img,
-        location:req.body.location,
-        description:req.body.description,
-        author:{
-            id:req.user._id,
-            username:req.user.username
+router.post('/', isLoggedIn, upload.single('campground[image]'),function(req,res){
+    
+    cloudinary.uploader.upload(req.file.path, function (result) {
+        // add cloudinary url for the image to the campground object under image property    
+        req.body.campground.img = result.secure_url;
+        // add author to campground
+        req.body.campground.author = {
+            id: req.user._id,
+            username: req.user.username
         }
-        
-    };
-    Campgrounds.create(obj,function(err,newone)
-    {
-        if(err)
-        console.log(err);
-        else
-        {
-           // console.log(newone);
-            req.flash("success","Created a new Campground");
-            res.redirect('/campgrounds');
-        }
-    });
+
+        Campgrounds.create(req.body.campground, function (err, newone) {
+            if (err)
+                console.log(err);
+            else {
+               // console.log(newone);
+                req.flash("success", "Created a new Campground");
+                res.redirect('/campgrounds');
+            }
+        });
+    });  
     
 });
 

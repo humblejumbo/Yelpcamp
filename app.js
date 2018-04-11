@@ -12,6 +12,8 @@ var bcrypt                  =require('bcrypt-nodejs');
 var async                   =require('async');
 var crypto                  =require('crypto');
 var dotenv                  =require('dotenv');
+var multer                  =require('multer');
+var cloudinary              =require('cloudinary');
 
 var Campgrounds=require('./models/campgrounds');
 var Comments=require('./models/comments');
@@ -49,6 +51,7 @@ mongoose.connect(process.env.DATABASEURL);
 passport.use(new localstrategy(Users.authenticate()));
 passport.serializeUser(Users.serializeUser());
 passport.deserializeUser(Users.deserializeUser());
+
 
 
 app.use(function(req,res,next)
