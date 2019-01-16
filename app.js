@@ -44,7 +44,7 @@ app.use(require('express-session')
 
 app.use(passport.initialize());
 app.use(passport.session());
-//mongoose.connect("mongodb://localhost/Yelpcamp");
+mongoose.connect("mongodb://imsg:tvftyres@ds115219.mlab.com:15219/campy");
 mongoose.connect(process.env.DATABASEURL);
 
 //PASSPORT CONFIG
@@ -68,6 +68,6 @@ app.use('/campgrounds/:id/comments',commentroutes);
 app.use('/',indexroutes);
 
 
-app.listen(3000,function(){
+app.listen(process.env.PORT||3000,function(){
     console.log("THE YELPCAMP SERVER HAS STARTED");
 });
